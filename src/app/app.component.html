@@ -1,0 +1,43 @@
+<h1 style="text-align: center;">Ng store demo</h1>
+<div style="display : flex; justify-content: space-around;">
+  <div>
+    <h2>Heroes </h2>
+    <div>
+      <p>Add hero:</p>
+      <input type="text" [(ngModel)]="currentHero.name" placeholder="name"/>
+      <input type="text" [(ngModel)]="currentHero.mainAttribute" placeholder="main attribute" />
+      <button (click)="onAddHero()">Add</button>
+    </div>
+  
+    <div>
+      <h3>List of Heroes</h3>
+      <div *ngFor = "let hero of heroes">
+        <div>
+          <p> Hero name : {{ hero.name }}  </p>
+          <button (click)="onRemoveHero(hero)">close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h2>Items </h2>
+    <div>
+      <p>Add Item:</p>
+      <input type="text" [(ngModel)]="currentItem.name" placeholder="name"/>
+      <input type="number" [(ngModel)]="currentItem.price" placeholder="main attribute" />
+      <button (click)="onAddItem()">Add</button>
+    </div>
+  
+    <div>
+      <h3>List of Itemes</h3>
+      <div *ngFor = "let item of items">
+        <div>
+          <p> Item name : {{ item.name }}  </p>
+          <p> Price : {{item.price}}</p>
+          <button (click)="onRemoveItem(item)">close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
