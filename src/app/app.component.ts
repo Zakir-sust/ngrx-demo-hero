@@ -9,6 +9,7 @@ import { AddItem, RemoveItem } from './state/item.actions';
 import { Item } from './models/item.model';
 import { selectHero } from './state/hero.selector';
 import { AppState } from './models/data.model';
+import { selectItems } from './state/item.selector';
 
 @Component({
   selector: 'app-root',
@@ -31,11 +32,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.store.select(selectHero).subscribe((data: Hero[]) => {
       this.heroes = data;
     })
-    // this.store.select((state : any) => state.abc.heroes).subscribe((data: Hero[]) => {
-    //   this.heroes = data;
-    // })
-
-    this.store.select((state : any) => state.item).subscribe((data : any) => {
+ 
+    this.store.select(selectItems).subscribe((data : Item[]) => {
       this.items = data;
     })
    

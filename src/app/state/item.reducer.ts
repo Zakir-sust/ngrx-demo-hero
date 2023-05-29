@@ -1,7 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import { AddItem, RemoveItem } from './item.actions';
 import { Item } from '../models/item.model';
-const initialState: Item[] = [];
+import { AppState } from '../models/data.model';
+const initialState: AppState = {
+  heroes : [],
+  items : []
+}
 
 export const ItemReducer = createReducer(
   initialState,
@@ -9,13 +13,18 @@ export const ItemReducer = createReducer(
   on(RemoveItem, RemoveItemFunction)
 );
 
-function addItemFunction(state: Item[], Item: any) {
-  let data = [...state, Item];
-  return data;
+function addItemFunction(state: AppState, item: any) {
+  return {
+    ...state,
+    items : [...state.items, item]
+  }
 }
 
-function RemoveItemFunction(state: Item[], Item: any) {
-  let res =  state.filter((item) => item.name != Item.name );
-  return res;
+function RemoveItemFunction(state: AppState, item: any) {
+  const index = state.items.findIndex( data => data.name == item.name);
+  if(index == -1) return state;
+  return {...state,
+          items : [ ...state.items.slice(0, index), ...state.items.slice(index + 1)]
+  }
 }
 
