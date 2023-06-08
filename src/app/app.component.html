@@ -14,6 +14,7 @@
       <div *ngFor = "let hero of heroes">
         <div>
           <p> Hero name : {{ hero.name }}  </p>
+          <p> Main Attribute : {{ hero.mainAttribute }}</p>
           <button (click)="onRemoveHero(hero)">close</button>
         </div>
       </div>

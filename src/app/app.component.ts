@@ -4,8 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Hero } from './models/hero.model';
-import { AddHero, RemoveHero } from './state/hero.actions';
-import { AddItem, RemoveItem } from './state/item.actions';
+import { AddHero, RemoveHero, AddItem, RemoveItem, GetHeroes, GetItems } from './state/actions';
 import { Item } from './models/item.model';
 import { selectHero } from './state/hero.selector';
 import { AppState } from './models/data.model';
@@ -25,10 +24,12 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private readonly store: Store<Hero>) { 
     this.currentHero = {name : "", mainAttribute: ""}; 
     this.currentItem = {name : "", price : 1000};
+    
   }
 
   ngOnInit() {
-
+    this.store.dispatch(GetHeroes())
+    this.store.dispatch(GetItems())
     this.store.select(selectHero).subscribe((data: Hero[]) => {
       this.heroes = data;
     })
@@ -41,20 +42,20 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onAddHero() {
     let obj : Hero = { name: this.currentHero.name, mainAttribute: this.currentHero.mainAttribute };
-    this.store.dispatch(AddHero(obj));
+    this.store.dispatch(AddHero({hero : obj}));
   }
 
   onRemoveHero(hero: Hero){
-    this.store.dispatch(RemoveHero(hero));
+    this.store.dispatch(RemoveHero({hero : hero}));
   }
 
   onAddItem() {
     let obj : Item = { name: this.currentItem.name, price: this.currentItem.price };
-    this.store.dispatch(AddItem(obj));
+    this.store.dispatch(AddItem({item : obj}));
   }
 
-  onRemoveItem(Item: Item){
-    this.store.dispatch(RemoveItem(Item));
+  onRemoveItem(item: Item){
+    this.store.dispatch(RemoveItem({item : item}));
   }
 
   ngOnDestroy() {
